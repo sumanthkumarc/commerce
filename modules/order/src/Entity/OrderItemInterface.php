@@ -93,10 +93,22 @@ interface OrderItemInterface extends ContentEntityInterface, EntityAdjustableInt
    *
    * @param \Drupal\commerce_price\Price $unit_price
    *   The order item unit price.
+   * @param bool $override
+   *   Whether the unit price should be overridden.
    *
    * @return $this
    */
-  public function setUnitPrice(Price $unit_price);
+  public function setUnitPrice(Price $unit_price, $override = FALSE);
+
+  /**
+   * Gets whether the order item unit price is overridden.
+   *
+   * Overridden unit prices are not updated when the order is refreshed.
+   *
+   * @return bool
+   *   TRUE if the unit price is overridden, FALSE otherwise.
+   */
+  public function isUnitPriceOverridden();
 
   /**
    * Gets the order item total price.
@@ -105,6 +117,33 @@ interface OrderItemInterface extends ContentEntityInterface, EntityAdjustableInt
    *   The order item total price, or NULL.
    */
   public function getTotalPrice();
+
+  /**
+   * Gets an order item data value with the given key.
+   *
+   * Used to store temporary data during order processing (i.e. checkout).
+   *
+   * @param string $key
+   *   The key.
+   * @param mixed $default
+   *   The default value.
+   *
+   * @return mixed
+   *   The value.
+   */
+  public function getData($key, $default = NULL);
+
+  /**
+   * Sets an order item data value with the given key.
+   *
+   * @param string $key
+   *   The key.
+   * @param mixed $value
+   *   The value.
+   *
+   * @return $this
+   */
+  public function setData($key, $value);
 
   /**
    * Gets the order item creation timestamp.
